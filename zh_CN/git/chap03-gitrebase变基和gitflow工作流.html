@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>chap03-gitrebase变基和gitflow工作流 | akin前端手记</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <script>
+          var _hmt = _hmt || [];
+          (function() {
+          // 引入谷歌,不需要可删除这段
+          var hm1 = document.createElement("script");
+          hm1.src = "https://www.googletagmanager.com/gtag/js?id=G-CC1NESJ33M";
+          var s1 = document.getElementsByTagName("script")[0]; 
+          s1.parentNode.insertBefore(hm1, s1);
+          })();
+
+          // 谷歌加载,不需要可删除
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-CC1NESJ33M');
+      </script>
+    <link name="icon" content="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon-152x152.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#3eaf7c">
+    <meta name="description" content="akin前端手记-大前端">
+    <meta name="author" content="云奏">
+    <meta name="keywords" content="大前端，手记">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/icons/msapplication-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/assets/css/0.styles.7cce12cd.css" as="style"><link rel="preload" href="/assets/js/app.5233d0ec.js" as="script"><link rel="preload" href="/assets/js/8.c912c9ff.js" as="script"><link rel="preload" href="/assets/js/2.d5a55312.js" as="script"><link rel="preload" href="/assets/js/55.72ac028a.js" as="script"><link rel="preload" href="/assets/js/3.4eeae697.js" as="script"><link rel="preload" href="/assets/js/4.e9a16dec.js" as="script"><link rel="prefetch" href="/assets/js/10.c420e300.js"><link rel="prefetch" href="/assets/js/100.5be89c89.js"><link rel="prefetch" href="/assets/js/101.25ca4c56.js"><link rel="prefetch" href="/assets/js/102.9a645809.js"><link rel="prefetch" href="/assets/js/103.f35b0c7a.js"><link rel="prefetch" href="/assets/js/104.0779632a.js"><link rel="prefetch" href="/assets/js/105.62e3c161.js"><link rel="prefetch" href="/assets/js/106.c4fcc25a.js"><link rel="prefetch" href="/assets/js/107.b44fd888.js"><link rel="prefetch" href="/assets/js/108.f04fb7e0.js"><link rel="prefetch" href="/assets/js/109.94d6af92.js"><link rel="prefetch" href="/assets/js/11.57d9fe36.js"><link rel="prefetch" href="/assets/js/110.67dec0fc.js"><link rel="prefetch" href="/assets/js/111.edf46689.js"><link rel="prefetch" href="/assets/js/112.6e5c72c6.js"><link rel="prefetch" href="/assets/js/113.5108cf20.js"><link rel="prefetch" href="/assets/js/114.589bd1fe.js"><link rel="prefetch" href="/assets/js/115.cee934bb.js"><link rel="prefetch" href="/assets/js/116.b5f6a19a.js"><link rel="prefetch" href="/assets/js/117.29476fa3.js"><link rel="prefetch" href="/assets/js/118.c4721d7d.js"><link rel="prefetch" href="/assets/js/119.a9ba2cd2.js"><link rel="prefetch" href="/assets/js/12.66c2f01a.js"><link rel="prefetch" href="/assets/js/120.5a7d3afc.js"><link rel="prefetch" href="/assets/js/121.2962e76d.js"><link rel="prefetch" href="/assets/js/122.9daa16ef.js"><link rel="prefetch" href="/assets/js/123.87bca999.js"><link rel="prefetch" href="/assets/js/124.838c2921.js"><link rel="prefetch" href="/assets/js/125.6308b455.js"><link rel="prefetch" href="/assets/js/126.5ade77ce.js"><link rel="prefetch" href="/assets/js/127.cd7161d2.js"><link rel="prefetch" href="/assets/js/128.20916a60.js"><link rel="prefetch" href="/assets/js/129.ea75c498.js"><link rel="prefetch" href="/assets/js/13.38c4e8ae.js"><link rel="prefetch" href="/assets/js/130.0ba5b881.js"><link rel="prefetch" href="/assets/js/131.10c30f12.js"><link rel="prefetch" href="/assets/js/132.9c23610a.js"><link rel="prefetch" href="/assets/js/133.380eee89.js"><link rel="prefetch" href="/assets/js/134.3a4091e9.js"><link rel="prefetch" href="/assets/js/135.edb83ce8.js"><link rel="prefetch" href="/assets/js/136.dd076a56.js"><link rel="prefetch" href="/assets/js/137.be608d91.js"><link rel="prefetch" href="/assets/js/138.49432374.js"><link rel="prefetch" href="/assets/js/139.1ee70ffb.js"><link rel="prefetch" href="/assets/js/14.8b4f7627.js"><link rel="prefetch" href="/assets/js/140.02f936b6.js"><link rel="prefetch" href="/assets/js/141.3d9c7149.js"><link rel="prefetch" href="/assets/js/142.0d4e6526.js"><link rel="prefetch" href="/assets/js/143.a1714231.js"><link rel="prefetch" href="/assets/js/144.5d598d7e.js"><link rel="prefetch" href="/assets/js/145.b1cf6c51.js"><link rel="prefetch" href="/assets/js/146.29181095.js"><link rel="prefetch" href="/assets/js/147.65fde9c6.js"><link rel="prefetch" href="/assets/js/148.d53168e5.js"><link rel="prefetch" href="/assets/js/149.afac299d.js"><link rel="prefetch" href="/assets/js/15.a23e448b.js"><link rel="prefetch" href="/assets/js/150.1f92ce7e.js"><link rel="prefetch" href="/assets/js/151.f20e06f1.js"><link rel="prefetch" href="/assets/js/152.f8588b95.js"><link rel="prefetch" href="/assets/js/153.6c445ba9.js"><link rel="prefetch" href="/assets/js/154.131ae95a.js"><link rel="prefetch" href="/assets/js/155.f2d1a12a.js"><link rel="prefetch" href="/assets/js/156.21428dec.js"><link rel="prefetch" href="/assets/js/157.0417ae06.js"><link rel="prefetch" href="/assets/js/158.ca7e78f3.js"><link rel="prefetch" href="/assets/js/159.0de11e1b.js"><link rel="prefetch" href="/assets/js/16.e49d44e2.js"><link rel="prefetch" href="/assets/js/160.1ba216f2.js"><link rel="prefetch" href="/assets/js/161.b515ff2d.js"><link rel="prefetch" href="/assets/js/162.f6599cfd.js"><link rel="prefetch" href="/assets/js/163.b123c0de.js"><link rel="prefetch" href="/assets/js/164.093388c7.js"><link rel="prefetch" href="/assets/js/165.3ddda564.js"><link rel="prefetch" href="/assets/js/166.1dd8c156.js"><link rel="prefetch" href="/assets/js/167.f3bb1e80.js"><link rel="prefetch" href="/assets/js/168.360a8c73.js"><link rel="prefetch" href="/assets/js/169.65b7d52a.js"><link rel="prefetch" href="/assets/js/17.68fcf248.js"><link rel="prefetch" href="/assets/js/170.b6bd57d2.js"><link rel="prefetch" href="/assets/js/171.2e8878b8.js"><link rel="prefetch" href="/assets/js/172.1552f043.js"><link rel="prefetch" href="/assets/js/173.45037170.js"><link rel="prefetch" href="/assets/js/174.39cef537.js"><link rel="prefetch" href="/assets/js/175.f847a8ec.js"><link rel="prefetch" href="/assets/js/176.2963eb96.js"><link rel="prefetch" href="/assets/js/177.7135bb5b.js"><link rel="prefetch" href="/assets/js/178.747d0883.js"><link rel="prefetch" href="/assets/js/179.4a9d894b.js"><link rel="prefetch" href="/assets/js/18.5a0b2deb.js"><link rel="prefetch" href="/assets/js/180.3a5e1682.js"><link rel="prefetch" href="/assets/js/181.1382b266.js"><link rel="prefetch" href="/assets/js/182.d38f0f8b.js"><link rel="prefetch" href="/assets/js/183.60e9a314.js"><link rel="prefetch" href="/assets/js/184.20e17cef.js"><link rel="prefetch" href="/assets/js/185.ea9fff39.js"><link rel="prefetch" href="/assets/js/186.7f215ad9.js"><link rel="prefetch" href="/assets/js/187.f2676c9e.js"><link rel="prefetch" href="/assets/js/188.5a64b6bc.js"><link rel="prefetch" href="/assets/js/189.01fceec5.js"><link rel="prefetch" href="/assets/js/19.3c914534.js"><link rel="prefetch" href="/assets/js/190.cd91cc6b.js"><link rel="prefetch" href="/assets/js/191.a2e40a06.js"><link rel="prefetch" href="/assets/js/192.3c32cc86.js"><link rel="prefetch" href="/assets/js/193.20479072.js"><link rel="prefetch" href="/assets/js/194.0ced7501.js"><link rel="prefetch" href="/assets/js/195.41a040cc.js"><link rel="prefetch" href="/assets/js/196.da7591a8.js"><link rel="prefetch" href="/assets/js/197.9d30c1b9.js"><link rel="prefetch" href="/assets/js/198.f4f7511c.js"><link rel="prefetch" href="/assets/js/199.855a844d.js"><link rel="prefetch" href="/assets/js/20.8aad5283.js"><link rel="prefetch" href="/assets/js/200.ac878eea.js"><link rel="prefetch" href="/assets/js/201.cbaf059b.js"><link rel="prefetch" href="/assets/js/202.0ec86e91.js"><link rel="prefetch" href="/assets/js/203.f7ed5587.js"><link rel="prefetch" href="/assets/js/204.4cb994b2.js"><link rel="prefetch" href="/assets/js/205.620d5272.js"><link rel="prefetch" href="/assets/js/206.087832a5.js"><link rel="prefetch" href="/assets/js/207.bef5ca02.js"><link rel="prefetch" href="/assets/js/208.4f6a8af7.js"><link rel="prefetch" href="/assets/js/209.08d4bc86.js"><link rel="prefetch" href="/assets/js/21.e0b87017.js"><link rel="prefetch" href="/assets/js/210.75ec5fc9.js"><link rel="prefetch" href="/assets/js/211.f2359381.js"><link rel="prefetch" href="/assets/js/212.fb063e66.js"><link rel="prefetch" href="/assets/js/213.44c7a873.js"><link rel="prefetch" href="/assets/js/214.78d15ecc.js"><link rel="prefetch" href="/assets/js/215.89c3bc13.js"><link rel="prefetch" href="/assets/js/216.4db71337.js"><link rel="prefetch" href="/assets/js/217.165eedb7.js"><link rel="prefetch" href="/assets/js/218.e7ff90b1.js"><link rel="prefetch" href="/assets/js/219.19db37dc.js"><link rel="prefetch" href="/assets/js/22.70632614.js"><link rel="prefetch" href="/assets/js/220.6d8d4987.js"><link rel="prefetch" href="/assets/js/221.5df2be55.js"><link rel="prefetch" href="/assets/js/222.b7137c8b.js"><link rel="prefetch" href="/assets/js/223.536ea584.js"><link rel="prefetch" href="/assets/js/224.3b8d1552.js"><link rel="prefetch" href="/assets/js/225.a30526cc.js"><link rel="prefetch" href="/assets/js/226.5a3f1278.js"><link rel="prefetch" href="/assets/js/227.cc85c1f0.js"><link rel="prefetch" href="/assets/js/228.9a0bd486.js"><link rel="prefetch" href="/assets/js/229.c45724d3.js"><link rel="prefetch" href="/assets/js/23.03bfc71e.js"><link rel="prefetch" href="/assets/js/230.f136d56b.js"><link rel="prefetch" href="/assets/js/231.a70749b0.js"><link rel="prefetch" href="/assets/js/232.8c637cf0.js"><link rel="prefetch" href="/assets/js/233.81b663f2.js"><link rel="prefetch" href="/assets/js/234.ffabbdef.js"><link rel="prefetch" href="/assets/js/235.11e3e24c.js"><link rel="prefetch" href="/assets/js/236.a1c7e7dc.js"><link rel="prefetch" href="/assets/js/237.38a6a66b.js"><link rel="prefetch" href="/assets/js/238.b3e7efd2.js"><link rel="prefetch" href="/assets/js/239.3da5bc69.js"><link rel="prefetch" href="/assets/js/24.e2345451.js"><link rel="prefetch" href="/assets/js/240.576b8ade.js"><link rel="prefetch" href="/assets/js/241.006d2b39.js"><link rel="prefetch" href="/assets/js/242.c0ed86da.js"><link rel="prefetch" href="/assets/js/243.987e32d1.js"><link rel="prefetch" href="/assets/js/244.9a6e2c08.js"><link rel="prefetch" href="/assets/js/245.abee5942.js"><link rel="prefetch" href="/assets/js/246.864a52af.js"><link rel="prefetch" href="/assets/js/247.c9f2e901.js"><link rel="prefetch" href="/assets/js/248.bcc83f26.js"><link rel="prefetch" href="/assets/js/249.73f47bde.js"><link rel="prefetch" href="/assets/js/25.d579b8f4.js"><link rel="prefetch" href="/assets/js/250.d3ad4ec1.js"><link rel="prefetch" href="/assets/js/251.5e57a8c6.js"><link rel="prefetch" href="/assets/js/252.b1151bc5.js"><link rel="prefetch" href="/assets/js/253.24c941a7.js"><link rel="prefetch" href="/assets/js/254.d2424c19.js"><link rel="prefetch" href="/assets/js/255.2cc686a9.js"><link rel="prefetch" href="/assets/js/256.0a0ff853.js"><link rel="prefetch" href="/assets/js/257.2b6ae352.js"><link rel="prefetch" href="/assets/js/258.cd2b5f2f.js"><link rel="prefetch" href="/assets/js/259.bdd9a7a5.js"><link rel="prefetch" href="/assets/js/26.9ef3aa1a.js"><link rel="prefetch" href="/assets/js/260.c6940de0.js"><link rel="prefetch" href="/assets/js/261.4b92251d.js"><link rel="prefetch" href="/assets/js/262.4323250d.js"><link rel="prefetch" href="/assets/js/263.d7707580.js"><link rel="prefetch" href="/assets/js/264.d56efdd2.js"><link rel="prefetch" href="/assets/js/265.bf18562e.js"><link rel="prefetch" href="/assets/js/266.56099747.js"><link rel="prefetch" href="/assets/js/267.52ad08ad.js"><link rel="prefetch" href="/assets/js/268.551fe6af.js"><link rel="prefetch" href="/assets/js/269.d715aa2c.js"><link rel="prefetch" href="/assets/js/27.7aacdf13.js"><link rel="prefetch" href="/assets/js/270.81a2a8c5.js"><link rel="prefetch" href="/assets/js/271.5a10359f.js"><link rel="prefetch" href="/assets/js/272.fc32a8dc.js"><link rel="prefetch" href="/assets/js/273.ac5b0573.js"><link rel="prefetch" href="/assets/js/274.01ee0c5e.js"><link rel="prefetch" href="/assets/js/275.738e6099.js"><link rel="prefetch" href="/assets/js/276.9369cbbc.js"><link rel="prefetch" href="/assets/js/277.6c054e1b.js"><link rel="prefetch" href="/assets/js/278.c8120527.js"><link rel="prefetch" href="/assets/js/279.8dcc272e.js"><link rel="prefetch" href="/assets/js/28.c41b107f.js"><link rel="prefetch" href="/assets/js/280.f84c3eea.js"><link rel="prefetch" href="/assets/js/281.7b93295d.js"><link rel="prefetch" href="/assets/js/282.d52cf7c0.js"><link rel="prefetch" href="/assets/js/283.455805c4.js"><link rel="prefetch" href="/assets/js/284.1f5f8cd2.js"><link rel="prefetch" href="/assets/js/285.41b2af59.js"><link rel="prefetch" href="/assets/js/286.e4935ca6.js"><link rel="prefetch" href="/assets/js/287.ed3c6a61.js"><link rel="prefetch" href="/assets/js/288.be3598c9.js"><link rel="prefetch" href="/assets/js/289.8435c6eb.js"><link rel="prefetch" href="/assets/js/29.fa2caa5f.js"><link rel="prefetch" href="/assets/js/290.9f5b2426.js"><link rel="prefetch" href="/assets/js/291.fde403e6.js"><link rel="prefetch" href="/assets/js/292.f323c5b4.js"><link rel="prefetch" href="/assets/js/293.1f7f4251.js"><link rel="prefetch" href="/assets/js/294.85f46e90.js"><link rel="prefetch" href="/assets/js/295.43107676.js"><link rel="prefetch" href="/assets/js/296.900124ac.js"><link rel="prefetch" href="/assets/js/297.f1e6380f.js"><link rel="prefetch" href="/assets/js/298.bf0076a1.js"><link rel="prefetch" href="/assets/js/299.7f1cefc7.js"><link rel="prefetch" href="/assets/js/30.dde5c3c6.js"><link rel="prefetch" href="/assets/js/300.9d0ef5e5.js"><link rel="prefetch" href="/assets/js/301.c4bf02e7.js"><link rel="prefetch" href="/assets/js/302.9e349c18.js"><link rel="prefetch" href="/assets/js/303.b9ccd00e.js"><link rel="prefetch" href="/assets/js/304.cdd8741f.js"><link rel="prefetch" href="/assets/js/305.52b6f3dc.js"><link rel="prefetch" href="/assets/js/31.4f6da7b2.js"><link rel="prefetch" href="/assets/js/32.e9e29305.js"><link rel="prefetch" href="/assets/js/33.09275a9e.js"><link rel="prefetch" href="/assets/js/34.068c8ac1.js"><link rel="prefetch" href="/assets/js/35.1a9d712c.js"><link rel="prefetch" href="/assets/js/36.93f2a908.js"><link rel="prefetch" href="/assets/js/37.951e35f8.js"><link rel="prefetch" href="/assets/js/38.daa327b9.js"><link rel="prefetch" href="/assets/js/39.4f09dc07.js"><link rel="prefetch" href="/assets/js/40.0ed788c0.js"><link rel="prefetch" href="/assets/js/41.704b0730.js"><link rel="prefetch" href="/assets/js/42.d2cd249f.js"><link rel="prefetch" href="/assets/js/43.42798f03.js"><link rel="prefetch" href="/assets/js/44.d3dbb31b.js"><link rel="prefetch" href="/assets/js/45.45fa7a23.js"><link rel="prefetch" href="/assets/js/46.110ba849.js"><link rel="prefetch" href="/assets/js/47.bbe13f15.js"><link rel="prefetch" href="/assets/js/48.f9c4988d.js"><link rel="prefetch" href="/assets/js/49.ab8e9f2b.js"><link rel="prefetch" href="/assets/js/5.83c867f4.js"><link rel="prefetch" href="/assets/js/50.0f0573fe.js"><link rel="prefetch" href="/assets/js/51.8b9547c1.js"><link rel="prefetch" href="/assets/js/52.84fce60c.js"><link rel="prefetch" href="/assets/js/53.908aeb67.js"><link rel="prefetch" href="/assets/js/54.6403120e.js"><link rel="prefetch" href="/assets/js/56.ea904dbd.js"><link rel="prefetch" href="/assets/js/57.eef50c96.js"><link rel="prefetch" href="/assets/js/58.185d80ec.js"><link rel="prefetch" href="/assets/js/59.c50134e7.js"><link rel="prefetch" href="/assets/js/6.118672f5.js"><link rel="prefetch" href="/assets/js/60.1f0989d1.js"><link rel="prefetch" href="/assets/js/61.c5d73f22.js"><link rel="prefetch" href="/assets/js/62.319915ce.js"><link rel="prefetch" href="/assets/js/63.fa1a1e72.js"><link rel="prefetch" href="/assets/js/64.402cb712.js"><link rel="prefetch" href="/assets/js/65.fc977c35.js"><link rel="prefetch" href="/assets/js/66.2b2fa863.js"><link rel="prefetch" href="/assets/js/67.fb751e5d.js"><link rel="prefetch" href="/assets/js/68.4ca276f4.js"><link rel="prefetch" href="/assets/js/69.9404f782.js"><link rel="prefetch" href="/assets/js/7.257e7239.js"><link rel="prefetch" href="/assets/js/70.8a32bbf4.js"><link rel="prefetch" href="/assets/js/71.1ee5ea22.js"><link rel="prefetch" href="/assets/js/72.0417fed8.js"><link rel="prefetch" href="/assets/js/73.248774be.js"><link rel="prefetch" href="/assets/js/74.ca433ba7.js"><link rel="prefetch" href="/assets/js/75.707c1d4d.js"><link rel="prefetch" href="/assets/js/76.ae71c893.js"><link rel="prefetch" href="/assets/js/77.548ddeba.js"><link rel="prefetch" href="/assets/js/78.20030567.js"><link rel="prefetch" href="/assets/js/79.321e2a18.js"><link rel="prefetch" href="/assets/js/80.0ed1041c.js"><link rel="prefetch" href="/assets/js/81.20cef870.js"><link rel="prefetch" href="/assets/js/82.d2f1ab49.js"><link rel="prefetch" href="/assets/js/83.c988c4ff.js"><link rel="prefetch" href="/assets/js/84.760b2f14.js"><link rel="prefetch" href="/assets/js/85.6d57c38c.js"><link rel="prefetch" href="/assets/js/86.406d1e69.js"><link rel="prefetch" href="/assets/js/87.682459b3.js"><link rel="prefetch" href="/assets/js/88.fe78607b.js"><link rel="prefetch" href="/assets/js/89.753281e3.js"><link rel="prefetch" href="/assets/js/9.0501920c.js"><link rel="prefetch" href="/assets/js/90.705777e2.js"><link rel="prefetch" href="/assets/js/91.505ae7d2.js"><link rel="prefetch" href="/assets/js/92.bc397585.js"><link rel="prefetch" href="/assets/js/93.1654e248.js"><link rel="prefetch" href="/assets/js/94.0706eff5.js"><link rel="prefetch" href="/assets/js/95.399712f9.js"><link rel="prefetch" href="/assets/js/96.463ed2e0.js"><link rel="prefetch" href="/assets/js/97.2d7bc94b.js"><link rel="prefetch" href="/assets/js/98.cca46f5c.js"><link rel="prefetch" href="/assets/js/99.eb923908.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7cce12cd.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/hero.png" alt="akin前端手记" class="logo"> <span class="site-name can-hide">akin前端手记</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="大前端" class="dropdown-title"><span class="title">大前端</span> <span class="arrow down"></span></button> <button type="button" aria-label="大前端" class="mobile-dropdown-title"><span class="title">大前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/zh_CN/ps-cook/01-ps.html" class="nav-link">
+  ps-pxcook
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/svn/chap01_setup.html" class="nav-link">
+  svn
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/git/chap01_setup.html" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/less/01-less介绍.html" class="nav-link">
+  less
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/js_advance/chap01_setup.html" class="nav-link">
+  js高级
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/es6/01-es6-letconst.html" class="nav-link">
+  es6
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/promise/01-setup.html" class="nav-link">
+  promise
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/js_data_ai/chap01_setup.html" class="nav-link">
+  js数据结构和算法
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/vue2_src_parse/chap01_setup.html" class="nav-link">
+  vue2源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/note_howtocreate_vuepressapp/chapter01_create_vp_star.html" class="nav-link">
+  搭建vuepress
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/toutiao_mobile/chap01_setup.html" class="nav-link">
+  头条移动端文档
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/xcx_mall/01-首页模块.html" class="nav-link">
+  商城微信小程序文档
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/v3_supermall/01-项目起步.html" class="nav-link">
+  vue3小兔鲜文档
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/front_end_mianshiti/chap01_setup.html" class="nav-link">
+  前端面试题
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/vuemianshi/01-diff.html" class="nav-link">
+  Vue面试题
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/mianjing/01-mj1.html" class="nav-link">
+  前端面经
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="大前端" class="dropdown-title"><span class="title">大前端</span> <span class="arrow down"></span></button> <button type="button" aria-label="大前端" class="mobile-dropdown-title"><span class="title">大前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/zh_CN/ps-cook/01-ps.html" class="nav-link">
+  ps-pxcook
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/svn/chap01_setup.html" class="nav-link">
+  svn
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/git/chap01_setup.html" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/less/01-less介绍.html" class="nav-link">
+  less
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/js_advance/chap01_setup.html" class="nav-link">
+  js高级
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/es6/01-es6-letconst.html" class="nav-link">
+  es6
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/promise/01-setup.html" class="nav-link">
+  promise
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/js_data_ai/chap01_setup.html" class="nav-link">
+  js数据结构和算法
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/vue2_src_parse/chap01_setup.html" class="nav-link">
+  vue2源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/note_howtocreate_vuepressapp/chapter01_create_vp_star.html" class="nav-link">
+  搭建vuepress
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/toutiao_mobile/chap01_setup.html" class="nav-link">
+  头条移动端文档
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/xcx_mall/01-首页模块.html" class="nav-link">
+  商城微信小程序文档
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/v3_supermall/01-项目起步.html" class="nav-link">
+  vue3小兔鲜文档
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/front_end_mianshiti/chap01_setup.html" class="nav-link">
+  前端面试题
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/vuemianshi/01-diff.html" class="nav-link">
+  Vue面试题
+</a></li><li class="dropdown-item"><!----> <a href="/zh_CN/mianjing/01-mj1.html" class="nav-link">
+  前端面经
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>git</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/zh_CN/git/chap01_setup.html" class="sidebar-link">chap01_初始git和commit回滚</a></li><li><a href="/zh_CN/git/chap02-初识分支和线上修Bug.html" class="sidebar-link">chap02-初识分支和线上修Bug</a></li><li><a href="/zh_CN/git/chap03-gitrebase变基和gitflow工作流.html" class="active sidebar-link">chap03-gitrebase变基和gitflow工作流</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/zh_CN/git/chap03-gitrebase变基和gitflow工作流.html#_01-rebase应用场景一" class="sidebar-link">01-rebase应用场景一</a></li><li class="sidebar-sub-header"><a href="/zh_CN/git/chap03-gitrebase变基和gitflow工作流.html#_02-rebase应用场景二" class="sidebar-link">02-rebase应用场景二</a></li><li class="sidebar-sub-header"><a href="/zh_CN/git/chap03-gitrebase变基和gitflow工作流.html#_03-rebase场景三以及注意事项" class="sidebar-link">03-rebase场景三以及注意事项</a></li><li class="sidebar-sub-header"><a href="/zh_CN/git/chap03-gitrebase变基和gitflow工作流.html#_03-beyond-compare软件快速解决冲突" class="sidebar-link">03-beyond compare软件快速解决冲突</a></li><li class="sidebar-sub-header"><a href="/zh_CN/git/chap03-gitrebase变基和gitflow工作流.html#_04-git命令总结" class="sidebar-link">04-git命令总结</a></li></ul></li><li><a href="/zh_CN/git/chap04-多人协同git开发gitflow工作流.html" class="sidebar-link">chap04-多人协同git开发gitflow工作流</a></li><li><a href="/zh_CN/git/chap05-给开源项目贡献代码.html" class="sidebar-link">chap05-给开源项目贡献代码</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="chap03-gitrebase变基和gitflow工作流"><a href="#chap03-gitrebase变基和gitflow工作流" class="header-anchor">#</a> chap03-gitrebase变基和gitflow工作流</h1> <h2 id="_01-rebase应用场景一"><a href="#_01-rebase应用场景一" class="header-anchor">#</a> 01-rebase应用场景一</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>使git记录更简洁
+
+一个大功能要用一周才能完成，第一天提交了一个版本，第二天提交了一个版本<span class="token punctuation">..</span>.第五天开发完
+每天都会提交一次，对于你来说，中间这个提交有意义，但是于老板而言，老板只需要开始的记录，和结束的记录两条即可，rebase可以把多条记录整合为一条记录
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><ol><li>复现rebase场景</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token builtin class-name">cd</span> sanlitun 
+
+<span class="token function">mkdir</span> pro_rebase
+
+<span class="token builtin class-name">cd</span> pro_rebase
+
+<span class="token function">git</span> init 
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('123')&quot;</span> <span class="token operator">&gt;&gt;</span> <span class="token number">1</span>.py
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;gongnneg:v1&quot;</span>
+
+<span class="token function">git</span> log
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('456')&quot;</span> <span class="token operator">&gt;&gt;</span> <span class="token number">2</span>.py <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span> <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> commit -m <span class="token string">&quot;gongnneg:v2&quot;</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('456')&quot;</span> <span class="token operator">&gt;&gt;</span> <span class="token number">3</span>.py <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span> <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> commit -m <span class="token string">&quot;gongnneg:v3&quot;</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('456')&quot;</span> <span class="token operator">&gt;&gt;</span> <span class="token number">4</span>.py <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span> <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> commit -m <span class="token string">&quot;gongnneg:v4&quot;</span>
+
+
+<span class="token function">git</span> log
+commit 7b10d4e910d5a58e22df1d6eacaceda18bf82f98 <span class="token punctuation">(</span>HEAD -<span class="token operator">&gt;</span> master<span class="token punctuation">)</span>
+Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+Date:   Sun Feb <span class="token number">13</span> <span class="token number">11</span>:09:54 <span class="token number">2022</span> +0800
+
+    gongnneg:v4
+
+commit 531be0fce41c9030cd510320c760664268d7f78c
+Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+Date:   Sun Feb <span class="token number">13</span> <span class="token number">11</span>:09:39 <span class="token number">2022</span> +0800
+
+    gongnneg:v3
+
+commit 8bdf53eeed37de7a79cb87ee703883b58969bed5
+Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+Date:   Sun Feb <span class="token number">13</span> <span class="token number">11</span>:09:12 <span class="token number">2022</span> +0800
+
+    gongnneg:v2
+
+commit f43ad43bc20b38fa4ce7e4de4c293a9c71c1f56c
+Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+Date:   Sun Feb <span class="token number">13</span> <span class="token number">11</span>:05:51 <span class="token number">2022</span> +0800
+
+    gongneng:v1
+    
+<span class="token comment">## 法1： 把几条commit记录整合为一条</span>
+<span class="token function">git</span> rebase -i f43ad43bc20b38fa4ce7e4de4c293a9c71c1f56c<span class="token punctuation">(</span>假设这里是v2的commit，那就是包括v2这条记录一直到最新的commit进行一个合并v4, v2-<span class="token operator">&gt;</span>v4合并<span class="token punctuation">)</span>
+
+<span class="token comment">## 把后两条的pick改成 s</span>
+pick 8bdf53e gongnneg:v2
+s 531be0f gongnneg:v3
+s 7b10d4e gongnneg:v4
+
+<span class="token comment">## Rebase f43ad43..7b10d4e onto f43ad43 (3 commands)</span>
+<span class="token comment">##</span>
+<span class="token comment">## Commands:</span>
+<span class="token comment">## p, pick = use commit</span>
+<span class="token comment">## r, reword = use commit, but edit the commit message</span>
+<span class="token comment">## e, edit = use commit, but stop for amending</span>
+<span class="token comment">## s, squash = use commit, but meld into previous commit</span>
+<span class="token comment">## f, fixup = like &quot;squash&quot;, but discard this commit's log message</span>
+<span class="token comment">## x, exec = run command (the rest of the line) using shell</span>
+<span class="token comment">## d, drop = remove commit</span>
+<span class="token comment">##</span>
+<span class="token comment">## These lines can be re-ordered; they are executed from top to bottom.</span>
+<span class="token comment">##</span>
+<span class="token comment">## If you remove a line here THAT COMMIT WILL BE LOST.</span>
+<span class="token comment">##</span>
+<span class="token comment">## However, if you remove everything, the rebase will be aborted.</span>
+<span class="token comment">##</span>
+<span class="token comment">## Note that empty commits are commented out</span>
+
+esc:wq <span class="token comment">## 此时会进入提交信息填写</span>
+
+<span class="token comment">## 可以删除修改为</span>
+v2 <span class="token operator">&amp;</span> v3 <span class="token operator">&amp;</span> v4 esc:wq
+
+
+<span class="token function">git</span> log 
+
+<span class="token comment">## 成功整合了</span>
+commit 608e15d46836013936b328c3a6adf9c147734728 <span class="token punctuation">(</span>HEAD -<span class="token operator">&gt;</span> master<span class="token punctuation">)</span>
+Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+Date:   Sun Feb <span class="token number">13</span> <span class="token number">11</span>:09:12 <span class="token number">2022</span> +0800
+
+    gongnneg:v2
+
+    gongnneg:v3		应该是一个v2 <span class="token operator">&amp;</span> v3 <span class="token operator">&amp;</span> v4,我们操作忘记写commit了
+
+    gongnneg:v4
+
+commit f43ad43bc20b38fa4ce7e4de4c293a9c71c1f56c
+Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+Date:   Sun Feb <span class="token number">13</span> <span class="token number">11</span>:05:51 <span class="token number">2022</span> +0800
+
+    gongneng:v1
+
+<span class="token comment">## 法2：</span>
+<span class="token function">git</span> rebase -i HEAD-3 <span class="token comment">##从当前commit记录开发，找三条离当前commit最近的记录进行合并</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br></div></div><p>如果这条记录已经被提交到github仓库了，就这条记录不要进行rebase，选择其他的记录rebase更好，两个历史记录会很麻烦，很乱</p> <p>合并记录时，建议不要合并已经push到仓库的记录</p> <h2 id="_02-rebase应用场景二"><a href="#_02-rebase应用场景二" class="header-anchor">#</a> 02-rebase应用场景二</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>master 
+	c1 -<span class="token operator">&gt;</span> c2  -<span class="token operator">&gt;</span> c4	-<span class="token operator">&gt;</span> c5
+				 	-<span class="token operator">&gt;</span> c3
+				 	
+如果你不想要这个分叉，让提交记录归并到一条线上
+
+m: c1 -<span class="token operator">&gt;</span> c2 -<span class="token operator">&gt;</span> c3 -<span class="token operator">&gt;</span> c4 -<span class="token operator">&gt;</span> c5
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><ol><li>步骤</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">git</span> log
+
+<span class="token function">git</span> branch dev
+
+<span class="token function">git</span> checkout dev
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('123')&quot;</span> <span class="token operator">&gt;&gt;</span> dev.py
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;dev branch&quot;</span>
+
+<span class="token function">git</span> log
+
+<span class="token function">git</span> checkout master
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('master123')&quot;</span> <span class="token operator">&gt;&gt;</span> master.py
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;master fn&quot;</span>
+
+<span class="token function">git</span> log
+
+<span class="token comment">## 假设按以前的思路，把dev合并到master</span>
+<span class="token function">git</span> merge dev
+
+<span class="token function">git</span> log
+
+<span class="token comment">## 图形流程日志</span>
+<span class="token function">git</span> log --graph
+<span class="token operator">|</span><span class="token punctuation">\</span>  Merge: 787e8b2 d84fbed
+<span class="token operator">|</span> <span class="token operator">|</span> Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span> <span class="token operator">|</span> Date:   Sun Feb <span class="token number">13</span> <span class="token number">12</span>:25:50 <span class="token number">2022</span> +0800
+<span class="token operator">|</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token operator">|</span>     Merge dev <span class="token number">2</span> master
+<span class="token operator">|</span> <span class="token operator">|</span>
+<span class="token operator">|</span> * commit d84fbed4f7360f61ecf34764febb444148fb60fa <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
+<span class="token operator">|</span> <span class="token operator">|</span> Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span> <span class="token operator">|</span> Date:   Sun Feb <span class="token number">13</span> <span class="token number">12</span>:23:51 <span class="token number">2022</span> +0800
+<span class="token operator">|</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token operator">|</span>     dev branch
+<span class="token operator">|</span> <span class="token operator">|</span>
+* <span class="token operator">|</span> commit 787e8b2493ac40eae0bafe40e77523d38c3b5151
+<span class="token operator">|</span>/  Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span>   Date:   Sun Feb <span class="token number">13</span> <span class="token number">12</span>:25:13 <span class="token number">2022</span> +0800
+<span class="token operator">|</span>
+<span class="token operator">|</span>       master fn
+<span class="token operator">|</span>
+* commit 608e15d46836013936b328c3a6adf9c147734728
+<span class="token operator">|</span> Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span> Date:   Sun Feb <span class="token number">13</span> <span class="token number">11</span>:09:12 <span class="token number">2022</span> +0800
+<span class="token operator">|</span>
+<span class="token operator">|</span>     gongnneg:v2
+<span class="token operator">|</span>
+<span class="token operator">|</span>     gongnneg:v3
+<span class="token operator">|</span>
+<span class="token builtin class-name">:</span>
+
+<span class="token comment">## 美化日志简洁</span>
+<span class="token function">git</span> log --graph --pretty<span class="token operator">=</span>format:<span class="token string">&quot;%h %s&quot;</span>
+Switched to branch <span class="token string">'master'</span>
+➜  pro_rebase git:<span class="token punctuation">(</span>master<span class="token punctuation">)</span> ll
+*   589f235 Merge dev <span class="token number">2</span> master
+<span class="token operator">|</span><span class="token punctuation">\</span>
+<span class="token operator">|</span> * d84fbed dev branch
+* <span class="token operator">|</span> 787e8b2 master fn
+<span class="token operator">|</span>/
+* 608e15d gongnneg:v2
+* f43ad43 gongneng:v1
+
+<span class="token comment">## 回到dev</span>
+<span class="token function">git</span> checkout dev
+
+<span class="token function">git</span> merge master
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('dev1')&quot;</span> <span class="token operator">&gt;&gt;</span> dev1.py
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;dev branch commit dev1&quot;</span>
+
+<span class="token function">git</span> checkout master
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('master1')&quot;</span> <span class="token operator">&gt;&gt;</span> master1.py
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;master1 commit&quot;</span>
+
+<span class="token comment">#### 通过rebase去做</span>
+<span class="token comment">## 先切回dev</span>
+<span class="token function">git</span> checkout dev
+
+<span class="token function">git</span> rebase master
+------
+First, rewinding <span class="token function">head</span> to replay your work on <span class="token function">top</span> of it<span class="token punctuation">..</span>.
+Applying: dev branch commit dev1
+首先，倒带头重放你的工作……
+应用:dev branch提交dev1
+------
+
+<span class="token comment">## 再切回master</span>
+<span class="token function">git</span> checkout master
+
+<span class="token function">git</span> merge dev
+
+<span class="token comment">## 提交记录已经变成一条线了</span>
+<span class="token function">git</span> log --graph
+
+* commit 7e98393033f4d40026b14b93c1b27e8c865c59be <span class="token punctuation">(</span>HEAD -<span class="token operator">&gt;</span> master, dev<span class="token punctuation">)</span>
+<span class="token operator">|</span> Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span> Date:   Sun Feb <span class="token number">13</span> <span class="token number">12</span>:31:13 <span class="token number">2022</span> +0800
+<span class="token operator">|</span>
+<span class="token operator">|</span>     dev branch commit dev1
+<span class="token operator">|</span>
+* commit 130b9add3bd77fa97766429eacd65cbec1dfffa0
+<span class="token operator">|</span> Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span> Date:   Sun Feb <span class="token number">13</span> <span class="token number">12</span>:34:00 <span class="token number">2022</span> +0800
+<span class="token operator">|</span>
+<span class="token operator">|</span>     master1 commit
+<span class="token operator">|</span>
+*   commit 589f235f611783019a2441084595bebc990447b9
+<span class="token operator">|</span><span class="token punctuation">\</span>  Merge: 787e8b2 d84fbed
+<span class="token operator">|</span> <span class="token operator">|</span> Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span> <span class="token operator">|</span> Date:   Sun Feb <span class="token number">13</span> <span class="token number">12</span>:25:50 <span class="token number">2022</span> +0800
+<span class="token operator">|</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token operator">|</span>     Merge dev <span class="token number">2</span> master
+<span class="token operator">|</span> <span class="token operator">|</span>
+<span class="token operator">|</span> * commit d84fbed4f7360f61ecf34764febb444148fb60fa
+<span class="token operator">|</span> <span class="token operator">|</span> Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+<span class="token operator">|</span> <span class="token operator">|</span> Date:   Sun Feb <span class="token number">13</span> <span class="token number">12</span>:23:51 <span class="token number">2022</span> +0800
+<span class="token operator">|</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token operator">|</span>     dev branch
+<span class="token operator">|</span> <span class="token operator">|</span>
+* <span class="token operator">|</span> commit 787e8b2493ac40eae0bafe40e77523d38c3b5151
+<span class="token operator">|</span>/  Author: toprhythm <span class="token operator">&lt;</span><span class="token number">2573424062</span>@qq.com<span class="token operator">&gt;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br></div></div><h2 id="_03-rebase场景三以及注意事项"><a href="#_03-rebase场景三以及注意事项" class="header-anchor">#</a> 03-rebase场景三以及注意事项</h2> <ol><li>约姑娘吃饭忘记提交代码了</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>家里v2 githubv1 合并产生分叉 因为git pull 产生分叉，我们不用git pull，用git fetch origin dev ,连招 <span class="token function">git</span> rebase origin/dev
+
+<span class="token function">git</span> rebase 可能会产生冲突，别着急，先解决冲突，在执行 <span class="token function">git</span> reabse --continue
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">git</span> checkout dev
+
+<span class="token function">git</span> log
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('123')&quot;</span> <span class="token operator">&gt;&gt;</span> <span class="token number">123</span>.py
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;123.py&quot;</span>
+
+<span class="token function">git</span> checkout master
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;print('master666')&quot;</span> <span class="token operator">&gt;&gt;</span> master666.py
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;masterxx&quot;</span>
+
+<span class="token function">git</span> checkout dev
+
+<span class="token function">git</span> rebase master
+
+<span class="token function">vim</span> <span class="token number">1</span>.py 解决冲突
+
+<span class="token function">git</span> status
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token number">1</span>.py
+
+<span class="token function">git</span> rebase --continue
+
+<span class="token function">git</span> log
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><h2 id="_03-beyond-compare软件快速解决冲突"><a href="#_03-beyond-compare软件快速解决冲突" class="header-anchor">#</a> 03-beyond compare软件快速解决冲突</h2> <p>下载安装 beyond comparre</p> <p>模拟冲突，和用bcompare解决</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">git</span> branch
+
+<span class="token function">git</span> checkout master
+
+<span class="token function">vim</span> master.py 修改第一行，随便改
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;master 1&quot;</span> m123
+
+<span class="token function">git</span> checkout dev 
+
+<span class="token function">vim</span> master.py 修改第一行，随便改 m999
+
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+<span class="token function">git</span> commit -m <span class="token string">&quot;dev 1&quot;</span>
+
+➜  pro_rebase git:<span class="token punctuation">(</span>dev<span class="token punctuation">)</span> <span class="token function">git</span> merge master
+Auto-merging master.py
+CONFLICT <span class="token punctuation">(</span>content<span class="token punctuation">)</span>: Merge conflict <span class="token keyword">in</span> master.py
+Automatic merge failed<span class="token punctuation">;</span> fix conflicts and <span class="token keyword">then</span> commit the result.
+
+<span class="token comment">## 以前,是手动解决</span>
+<span class="token function">vim</span> master.py
+<span class="token operator">&lt;&lt;&lt;</span><span class="token operator">&lt;&lt;&lt;</span><span class="token operator">&lt;</span> HEAD
+print<span class="token punctuation">(</span><span class="token string">'m999'</span><span class="token punctuation">)</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+print<span class="token punctuation">(</span><span class="token string">'m123'</span><span class="token punctuation">)</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;&gt;</span><span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> master
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><ol start="2"><li>使用bcompare快速解决冲突</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token number">1</span>. 安装beyond compare
+
+<span class="token number">2</span>. 在git中进行配置 --local：只对当前项目有效 pro_rebase/
+<span class="token function">git</span> config --local merge.tool bc3
+<span class="token function">git</span> config --local mergetool.path <span class="token string">'/usr/local/bin/bcomp'</span>
+<span class="token function">git</span> config --local mergetool.keepBackup <span class="token boolean">false</span>
+
+<span class="token number">3</span>. 找到这个安装目录
+打开bcompare软件，点击首选项，点击 安装命令行工具
+会弹出：
+  /usr/local/bin/bcomp:
+  启动比较并等待它完成。
+
+  /usr/local/bin/bcompare:
+  启动比较并立即返回。
+
+<span class="token number">4</span>. 应用bcomnpare 解决冲突
+<span class="token function">git</span> mergetool
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p><img src="https://gitee.com/toprhythm/imagebed/raw/master/picgoimagebebrepo/image-20220213130932308.png" alt="image-20220213130932308"></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>关闭这个软件，打开master
+
+➜  pro_rebase git:<span class="token punctuation">(</span>dev<span class="token punctuation">)</span> <span class="token function">cat</span> master.py
+print<span class="token punctuation">(</span><span class="token string">'m999'</span><span class="token punctuation">)</span>
+
+<span class="token comment">## 冲突已经超过被解决，不用vim，很棒，而且软件是拿到所有的冲突，可以点击上下箭头挨个解决冲突</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code>➜  pro_rebase git:<span class="token punctuation">(</span>dev<span class="token punctuation">)</span> <span class="token function">git</span> merge master
+fatal: You have not concluded your merge <span class="token punctuation">(</span>MERGE_HEAD exists<span class="token punctuation">)</span>.
+Please, commit your changes before you merge.
+
+你还没有结束你的合并<span class="token punctuation">(</span>MERGE_HEAD存在<span class="token punctuation">)</span>。
+请在合并之前提交您的更改。
+
+➜  pro_rebase git:<span class="token punctuation">(</span>dev<span class="token punctuation">)</span> <span class="token function">git</span> status
+On branch dev
+All conflicts fixed but you are still merging.
+  <span class="token punctuation">(</span>use <span class="token string">&quot;git commit&quot;</span> to conclude merge<span class="token punctuation">)</span>
+
+➜  pro_rebase git:<span class="token punctuation">(</span>dev<span class="token punctuation">)</span> <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+➜  pro_rebase git:<span class="token punctuation">(</span>dev<span class="token punctuation">)</span> <span class="token function">git</span> commit -m <span class="token string">&quot;解决冲突&quot;</span>
+<span class="token punctuation">[</span>dev 3b1513a<span class="token punctuation">]</span> 解决冲突
+➜  pro_rebase git:<span class="token punctuation">(</span>dev<span class="token punctuation">)</span> <span class="token function">git</span> merge master
+Already up to date.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h2 id="_04-git命令总结"><a href="#_04-git命令总结" class="header-anchor">#</a> 04-git命令总结</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>添加远程地址链接: <span class="token function">git</span> remote <span class="token function">add</span> 地址.git
+
+推送代码: <span class="token function">git</span> push origin dev
+
+下载代码: <span class="token function">git</span> clone 地址
+
+拉取代码：git pull origin dev 
+					等价于: <span class="token function">git</span> fetch origin dev + <span class="token function">git</span> merge origin/dev
+
+保持代码提交整洁（变基）: <span class="token function">git</span> rebase 分支
+
+记录图形展示,美化gitlog: <span class="token function">git</span> log --graph
+
+简洁版本:记录图形展示,美化gitlog: <span class="token function">git</span> log --graph --pretty<span class="token operator">=</span>format:<span class="token string">&quot;%h %s&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/zh_CN/git/chap02-初识分支和线上修Bug.html" class="prev">
+        chap02-初识分支和线上修Bug
+      </a></span> <span class="next"><a href="/zh_CN/git/chap04-多人协同git开发gitflow工作流.html">
+        chap04-多人协同git开发gitflow工作流
+      </a>
+      →
+    </span></p></div>  <!----> <div style="text-align:center;" data-v-4f5e5230><!----></div></main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.5233d0ec.js" defer></script><script src="/assets/js/8.c912c9ff.js" defer></script><script src="/assets/js/2.d5a55312.js" defer></script><script src="/assets/js/55.72ac028a.js" defer></script><script src="/assets/js/3.4eeae697.js" defer></script><script src="/assets/js/4.e9a16dec.js" defer></script>
+  </body>
+</html>
